@@ -3,6 +3,7 @@
     <AlertValues
       :msg='text'
       :values='values'
+      :deleteValue='deleteValue'
     />
   </div>
 </template>
@@ -30,8 +31,8 @@ export default {
         .get('http://localhost:5000/api/data')
         .then((response) => {
           const resData = response.data
-          console.log(this.values.push.length)
-          console.log(typeof resData)
+          // console.log(this.values.push.length)
+          // console.log(typeof resData)
           for (let i = 0; i < resData.length; i++) {
             console.log(resData[i]
             )
@@ -41,7 +42,17 @@ export default {
         })
         .catch(error => {
           console.log(error)
-          this.errored = true
+          // this.errored = true
+        })
+    },
+    async deleteValue (id) {
+      await axios
+        .delete('http://localhost:5000/api/data/delete/' + id)
+        .then(res => {
+          console.log(res.data)
+        })
+        .catch(err => {
+          console.log(err)
         })
     }
   },

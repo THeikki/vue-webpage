@@ -2,9 +2,23 @@
   <HeaderComponent />
   <div class="container">
     <h1>{{ msg }}</h1>
-    <ul>
-      <li>{{ values }}</li>
-    </ul>
+    <table>
+      <thead>
+        <tr>
+          <th>Time</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="value in values" v-bind:="value" :key="value._id">
+            <td>{{ value.timestamp }}</td>
+            <td>{{ value.value}}</td>
+            <td>
+                <button @click="deleteValue(value._id)">Delete</button>
+            </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
   <FooterComponent />
 </template>
@@ -17,8 +31,10 @@ export default {
   name: 'AlertValues',
   props: {
     msg: String,
-    values: Array
+    values: Array,
+    deleteValue: Function
   },
+  emits: ['remove'],
   components: {
     HeaderComponent,
     FooterComponent
@@ -38,19 +54,17 @@ export default {
 h1 {
   text-align: center;
 }
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-  text-align: center;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
 a {
   color: #315a48;
+}
+table {
+  margin: auto;
+  border-collapse: collapse;
+  width:fit-content;
+}
+th,td {
+  border: 1px solid black;
+  background-color: rgb(245, 199, 114);
+  padding: 10px;
 }
 </style>
