@@ -10,7 +10,7 @@
 
 <style>
 .header {
-    background-color: aquamarine;
+    background-color:aquamarine;
     position:fixed;
     top:0;
     right:0;
@@ -26,6 +26,6 @@ a {
 }
 
 .router-link-exact-active {
-    color: #6eb942;
+    color:brown;
 }
 </style>

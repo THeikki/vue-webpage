@@ -28,7 +28,6 @@ export default {
   position:fixed;
   top:100px;
   bottom:100px;
-  background-color:aliceblue;
   width:100%;
   margin:0;
 }

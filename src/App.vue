@@ -1,17 +1,13 @@
 <template>
-  <HeaderComponent />
-  <FooterComponent />
-  </template>
+  <LayoutComponent />
+</template>
 
 <script>
 
-import HeaderComponent from '@/components/HeaderComponent.vue'
-import FooterComponent from '@/components/FooterComponent.vue'
-
+import LayoutComponent from '@/components/LayoutComponent.vue'
 export default {
   components: {
-    HeaderComponent,
-    FooterComponent
+    LayoutComponent
   }
 }
 

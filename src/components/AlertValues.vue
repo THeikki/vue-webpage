@@ -2,6 +2,9 @@
   <HeaderComponent />
   <div class="container">
     <h1>{{ msg }}</h1>
+    <ul>
+      <li>{{ values }}</li>
+    </ul>
   </div>
   <FooterComponent />
 </template>
@@ -13,7 +16,8 @@ import FooterComponent from '@/components/FooterComponent.vue'
 export default {
   name: 'AlertValues',
   props: {
-    msg: String
+    msg: String,
+    values: Array
   },
   components: {
     HeaderComponent,
@@ -28,7 +32,6 @@ export default {
   position:fixed;
   top:100px;
   bottom:100px;
-  background-color:darkgrey;
   width:100%;
   margin:0;
 }
@@ -41,6 +44,7 @@ h3 {
 ul {
   list-style-type: none;
   padding: 0;
+  text-align: center;
 }
 li {
   display: inline-block;
