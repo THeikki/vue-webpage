@@ -1,9 +1,16 @@
 <template>
-  <div>
+  <div v-if="plankPage" class="container">
+  </div>
+  <div v-else-if="showEmpty" class="container">
+    <p>No data to show</p>
+  </div>
+  <div v-else>
     <AlertValues
       :msg='text'
       :values='values'
       :deleteValue='deleteValue'
+      :showEmpty='showEmpty'
+      :plankPage='plankPage'
     />
   </div>
 </template>
@@ -13,6 +20,7 @@
 import AlertValues from '@/components/AlertValues.vue'
 
 import axios from 'axios'
+// import { mapGetters } from 'vuex'
 
 export default {
   name: 'AlertView',
@@ -22,7 +30,9 @@ export default {
   data () {
     return {
       text: 'This is alert value page',
-      values: []
+      values: [],
+      showEmpty: false,
+      plankPage: true
     }
   },
   methods: {
@@ -31,18 +41,18 @@ export default {
         .get('http://localhost:5000/api/data')
         .then((response) => {
           const resData = response.data
-          // console.log(this.values.push.length)
-          // console.log(typeof resData)
           for (let i = 0; i < resData.length; i++) {
-            console.log(resData[i]
-            )
+            console.log(resData[i])
             this.values.push(resData[i])
           }
+          if (resData.length === 0) {
+            this.showEmpty = true
+          }
+          this.plankPage = false
           return this.values
         })
         .catch(error => {
           console.log(error)
-          // this.errored = true
         })
     },
     async deleteValue (id) {
@@ -55,9 +65,29 @@ export default {
           console.log(err)
         })
     }
-  },
+  }, /*
+  computed: {
+    val () {
+      return this.$store.state.values
+    }
+  }, */
   mounted () {
     this.getValues()
   }
 }
 </script>
+<style scoped>
+[v-cloak] {
+  display: none;
+}
+.container {
+  position: fixed;
+  top: 100px;
+  bottom: 100px;
+  width: 100%;
+  margin: 0;
+}
+p {
+  text-align: center;
+}
+</style>

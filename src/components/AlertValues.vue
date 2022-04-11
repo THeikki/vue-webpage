@@ -1,4 +1,4 @@
-<template>
+<template v-cloak>
   <HeaderComponent />
   <div class="container">
     <h1>{{ msg }}</h1>
@@ -10,7 +10,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="value in values" v-bind:="value" :key="value._id">
+        <tr v-for="value in values" :key="value._id">
             <td>{{ value.timestamp }}</td>
             <td>{{ value.value}}</td>
             <td>
@@ -32,9 +32,10 @@ export default {
   props: {
     msg: String,
     values: Array,
-    deleteValue: Function
+    deleteValue: Function,
+    showEmpty: Boolean,
+    plankPage: Boolean
   },
-  emits: ['remove'],
   components: {
     HeaderComponent,
     FooterComponent
@@ -44,12 +45,15 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+[v-cloak] {
+  display: none;
+}
 .container {
-  position:fixed;
-  top:100px;
-  bottom:100px;
-  width:100%;
-  margin:0;
+  position: fixed;
+  top: 100px;
+  bottom: 100px;
+  width: 100%;
+  margin: 0;
 }
 h1 {
   text-align: center;
@@ -60,7 +64,7 @@ a {
 table {
   margin: auto;
   border-collapse: collapse;
-  width:fit-content;
+  width: fit-content;
 }
 th,td {
   border: 1px solid black;
