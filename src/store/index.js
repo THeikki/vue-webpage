@@ -3,9 +3,9 @@ import axios from 'axios'
 
 export default createStore({
   state: {
-    values: [],
-    showEmpty: false,
-    plankPage: true
+    values: []
+    // showEmpty: false
+    // plankPage: true
   },
   getters: {
     savedValues: state => {
@@ -46,11 +46,11 @@ export default createStore({
         .get('http://localhost:5000/api/data')
         .then((response) => {
           // console.log(response.data)
-          if (response.data.length === 0) {
+          /* if (response.data.length === 0) {
             this.state.showEmpty = true
-          }
+          } */
           commit('setValues', response.data)
-          this.state.plankPage = false
+          // this.state.plankPage = false
         })
         .catch(error => {
           console.log(error)

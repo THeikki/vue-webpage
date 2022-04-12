@@ -1,16 +1,9 @@
 <template>
-  <div v-if="plankPage" class="container">
-  </div>
-  <div v-else-if="showEmpty" class="container">
-    <p>No data to show</p>
-  </div>
-  <div v-else>
+  <div>
     <AlertValues
     :msg='text'
     :savedValues='savedValues'
     :deleteValue='deleteValue'
-    :showEmpty='showEmpty'
-    :plankPage='plankPage'
     />
   </div>
 </template>
@@ -31,12 +24,12 @@ export default {
     }
   },
   computed: {
-    showEmpty () {
+    /* showEmpty () {
       return this.$store.state.showEmpty
     },
     plankPage () {
       return this.$store.state.plankPage
-    },
+    }, */
     values () {
       return this.$store.state.values
     },
@@ -53,7 +46,7 @@ export default {
   mounted () {
     this.$store.dispatch('getValues')
   },
-  beforeUpdate () {
+  updated () {
     this.$store.dispatch('getValues')
   }
 }
