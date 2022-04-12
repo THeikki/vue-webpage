@@ -1,4 +1,4 @@
-<template v-cloak>
+<template>
   <HeaderComponent />
   <div class="container">
     <h1>{{ msg }}</h1>
@@ -10,7 +10,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="value in values" :key="value._id">
+        <tr v-for="value in savedValues" :key="value._id">
             <td>{{ value.timestamp }}</td>
             <td>{{ value.value}}</td>
             <td>
@@ -31,7 +31,7 @@ export default {
   name: 'AlertValues',
   props: {
     msg: String,
-    values: Array,
+    savedValues: Array,
     deleteValue: Function,
     showEmpty: Boolean,
     plankPage: Boolean
@@ -45,9 +45,6 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-[v-cloak] {
-  display: none;
-}
 .container {
   position: fixed;
   top: 100px;

@@ -6,11 +6,11 @@
   </div>
   <div v-else>
     <AlertValues
-      :msg='text'
-      :values='values'
-      :deleteValue='deleteValue'
-      :showEmpty='showEmpty'
-      :plankPage='plankPage'
+    :msg='text'
+    :savedValues='savedValues'
+    :deleteValue='deleteValue'
+    :showEmpty='showEmpty'
+    :plankPage='plankPage'
     />
   </div>
 </template>
@@ -18,9 +18,7 @@
 <script>
 // @ is an alias to /src
 import AlertValues from '@/components/AlertValues.vue'
-
-import axios from 'axios'
-// import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'AlertView',
@@ -29,57 +27,38 @@ export default {
   },
   data () {
     return {
-      text: 'This is alert value page',
-      values: [],
-      showEmpty: false,
-      plankPage: true
+      text: 'This is alert value page'
     }
   },
-  methods: {
-    async getValues () {
-      await axios
-        .get('http://localhost:5000/api/data')
-        .then((response) => {
-          const resData = response.data
-          for (let i = 0; i < resData.length; i++) {
-            console.log(resData[i])
-            this.values.push(resData[i])
-          }
-          if (resData.length === 0) {
-            this.showEmpty = true
-          }
-          this.plankPage = false
-          return this.values
-        })
-        .catch(error => {
-          console.log(error)
-        })
-    },
-    async deleteValue (id) {
-      await axios
-        .delete('http://localhost:5000/api/data/delete/' + id)
-        .then(res => {
-          console.log(res.data)
-        })
-        .catch(err => {
-          console.log(err)
-        })
-    }
-  }, /*
   computed: {
-    val () {
+    showEmpty () {
+      return this.$store.state.showEmpty
+    },
+    plankPage () {
+      return this.$store.state.plankPage
+    },
+    values () {
       return this.$store.state.values
-    }
-  }, */
+    },
+    ...mapGetters([
+      'savedValues'
+    ])
+  },
+  methods: {
+    ...mapActions([
+      'getValues',
+      'deleteValue'
+    ])
+  },
   mounted () {
-    this.getValues()
+    this.$store.dispatch('getValues')
+  },
+  beforeUpdate () {
+    this.$store.dispatch('getValues')
   }
 }
 </script>
 <style scoped>
-[v-cloak] {
-  display: none;
-}
 .container {
   position: fixed;
   top: 100px;
