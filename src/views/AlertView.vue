@@ -7,7 +7,7 @@
   </div>
   <div v-show="showValues">
     <AlertValues
-    :msg='text'
+    :text='text'
     :savedValues='savedValues'
     :deleteValue='deleteValue'
     />

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <MeasurementValues msg="Welcome to Your Vue.js App"/>
+    <MeasurementValues text="Welcome to Your Vue.js App"/>
   </div>
 </template>
 

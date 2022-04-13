@@ -1,7 +1,7 @@
 <template>
   <HeaderComponent />
   <div class="container">
-    <h1>{{ msg }}</h1>
+    <h1>{{ text }}</h1>
     <table>
       <thead>
         <tr>
@@ -30,7 +30,7 @@ import FooterComponent from '@/components/FooterComponent.vue'
 export default {
   name: 'AlertValues',
   props: {
-    msg: String,
+    text: String,
     savedValues: Array,
     deleteValue: Function
   },

@@ -1,7 +1,7 @@
 <template>
   <HeaderComponent />
   <div class="container">
-    <h1>{{ msg }}</h1>
+    <h1>{{ text }}</h1>
   </div>
   <FooterComponent />
 </template>
@@ -13,7 +13,7 @@ import FooterComponent from '@/components/FooterComponent.vue'
 export default {
   name: 'MeasurementValues',
   props: {
-    msg: String
+    text: String
   },
   components: {
     HeaderComponent,
