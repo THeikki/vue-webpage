@@ -32,9 +32,7 @@ export default {
   props: {
     msg: String,
     savedValues: Array,
-    deleteValue: Function,
-    showEmpty: Boolean,
-    showValues: Boolean
+    deleteValue: Function
   },
   components: {
     HeaderComponent,

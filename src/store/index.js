@@ -36,8 +36,9 @@ export default createStore({
           console.log(res.data)
           commit('deleteValue', id)
         })
-        .catch(err => {
-          console.log(err)
+        .catch(error => {
+          alert(error, 'Virhe')
+          console.log(error)
         })
     },
     async getValues ({ commit }) {
@@ -55,10 +56,24 @@ export default createStore({
           commit('setValues', response.data)
         })
         .catch(error => {
+          alert(error, 'Virhe')
+          console.log(error)
+        })
+    },
+    async postValue () {
+      await axios
+        .post('http://localhost:5000/api/data/save', {
+          timestamp: '666.6.666',
+          value: 666
+        })
+        .then((response) => {
+          console.log(response.data)
+        })
+        .catch(error => {
+          alert(error, 'Virhe')
           console.log(error)
         })
     }
   },
-  modules: {
-  }
+  modules: {}
 })

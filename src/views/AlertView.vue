@@ -46,11 +46,13 @@ export default {
   methods: {
     ...mapActions([
       'getValues',
-      'deleteValue'
+      'deleteValue',
+      'postValue'
     ])
   },
   mounted () {
     this.$store.dispatch('getValues')
+    this.$store.dispatch('postValue')
   },
   updated () {
     this.$store.dispatch('getValues')
