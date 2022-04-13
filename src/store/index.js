@@ -4,8 +4,8 @@ import axios from 'axios'
 export default createStore({
   state: {
     values: [],
-    showEmpty: false,
-    showValues: true
+    showEmpty: null,
+    showValues: null
   },
   getters: {
     savedValues: state => {

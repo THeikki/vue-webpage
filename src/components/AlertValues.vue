@@ -2,7 +2,8 @@
   <HeaderComponent />
   <div class="container">
     <h1>{{ text }}</h1>
-    <table>
+    <div class="table-container">
+      <table>
       <thead>
         <tr>
           <th>Time</th>
@@ -19,6 +20,7 @@
         </tr>
       </tbody>
     </table>
+    </div>
   </div>
   <FooterComponent />
 </template>
@@ -43,12 +45,16 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.table-container {
+  padding: 50px;
+}
 .container {
   position: fixed;
   top: 100px;
   bottom: 100px;
   width: 100%;
   margin: 0;
+  overflow: auto;
 }
 h1 {
   text-align: center;
