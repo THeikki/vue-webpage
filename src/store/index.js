@@ -3,9 +3,9 @@ import axios from 'axios'
 
 export default createStore({
   state: {
-    values: []
-    // showEmpty: false
-    // plankPage: true
+    values: [],
+    showEmpty: false,
+    showValues: true
   },
   getters: {
     savedValues: state => {
@@ -21,7 +21,7 @@ export default createStore({
   },
   mutations: {
     deleteValue (state, id) {
-      console.log('poistettu:', id)
+      // console.log('poistettu:', id)
       state.values._id = id
     },
     setValues (state, value) {
@@ -35,7 +35,6 @@ export default createStore({
         .then(res => {
           console.log(res.data)
           commit('deleteValue', id)
-          // dispatch('getValues')
         })
         .catch(err => {
           console.log(err)
@@ -46,11 +45,14 @@ export default createStore({
         .get('http://localhost:5000/api/data')
         .then((response) => {
           // console.log(response.data)
-          /* if (response.data.length === 0) {
+          if (response.data.length === 0) {
             this.state.showEmpty = true
-          } */
+            this.state.showValues = false
+          } else {
+            this.state.showValues = true
+            this.state.showEmpty = false
+          }
           commit('setValues', response.data)
-          // this.state.plankPage = false
         })
         .catch(error => {
           console.log(error)

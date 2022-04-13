@@ -1,5 +1,11 @@
 <template>
-  <div>
+  <div class="container">
+    <div v-show="showEmpty" class="hidden">
+      <h1>{{text}}</h1>
+      <p>No values to show</p>
+    </div>
+  </div>
+  <div v-show="showValues">
     <AlertValues
     :msg='text'
     :savedValues='savedValues'
@@ -24,12 +30,12 @@ export default {
     }
   },
   computed: {
-    /* showEmpty () {
+    showValues () {
+      return this.$store.state.showValues
+    },
+    showEmpty () {
       return this.$store.state.showEmpty
     },
-    plankPage () {
-      return this.$store.state.plankPage
-    }, */
     values () {
       return this.$store.state.values
     },
@@ -52,6 +58,9 @@ export default {
 }
 </script>
 <style scoped>
+.hidden {
+  display: contents;
+}
 .container {
   position: fixed;
   top: 100px;
@@ -60,6 +69,9 @@ export default {
   margin: 0;
 }
 p {
+  text-align: center;
+}
+h1 {
   text-align: center;
 }
 </style>

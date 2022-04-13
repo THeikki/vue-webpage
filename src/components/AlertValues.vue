@@ -32,9 +32,9 @@ export default {
   props: {
     msg: String,
     savedValues: Array,
-    deleteValue: Function
-    // showEmpty: Boolean
-    // plankPage: Boolean
+    deleteValue: Function,
+    showEmpty: Boolean,
+    showValues: Boolean
   },
   components: {
     HeaderComponent,
