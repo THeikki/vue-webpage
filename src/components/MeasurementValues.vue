@@ -13,7 +13,8 @@ import FooterComponent from '@/components/FooterComponent.vue'
 export default {
   name: 'MeasurementValues',
   props: {
-    text: String
+    text: String,
+    mqttData: Array
   },
   components: {
     HeaderComponent,

@@ -2,7 +2,13 @@
   <div>
     <MeasurementValues
     :text='text'
+    :mqttData="mqttData"
     />
+  </div>
+  <div class="container">
+    <p>
+      {{ mqttData }}
+    </p>
   </div>
 </template>
 
@@ -34,7 +40,8 @@ export default {
       client: {
         connected: false
       },
-      subscribeSuccess: false
+      subscribeSuccess: false,
+      mqttData: []
     }
   },
   methods: {
@@ -44,14 +51,27 @@ export default {
       try {
         this.client = mqtt.connect(connectUrl, options)
       } catch (error) {
-        console.log('Ei toimi')
-        // console.log('mqtt.connect error', error)
+        console.log('mqtt.connect error', error)
       }
       this.client.on('connect', () => {
         console.log('Connection succeeded!')
+        this.doSubscribe()
       })
       this.client.on('error', error => {
         console.log('Connection failed', error)
+      })
+      this.client.on('message', (topic, message) => {
+        // this.mqttData = this.mqttData.concat(message)
+        // console.log(`${message}`)
+        const val = JSON.stringify(String.fromCharCode.apply(null, new Uint8Array(message)))
+        const test = val.slice(1, -1)
+        const t1 = test.split(',')
+        this.mqttData = t1
+        if (this.mqttData[1] > 20) {
+          this.$store.dispatch('postValue', this.mqttData)
+        }
+        // console.log(this.mqttData)
+        console.log(this.mqttData[0])
       })
     },
     doSubscribe () {
@@ -66,8 +86,17 @@ export default {
       })
     }
   },
-  mounted () {
+  created () {
     this.createConnection()
   }
 }
 </script>
+<style scoped>
+.container {
+  position: fixed;
+  top: 400px;
+  bottom: 100px;
+  width: 100%;
+  margin: 0;
+}
+</style>
