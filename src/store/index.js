@@ -1,11 +1,30 @@
 import { createStore } from 'vuex'
 import axios from 'axios'
+import mqtt from 'mqtt/dist/mqtt'
 
 export default createStore({
   state: {
+    datas: [],
     values: [],
     showEmpty: null,
-    showValues: null
+    showValues: null,
+    connection: {
+      host: 'broker.hivemq.com',
+      port: 8000,
+      endpoint: '/mqtt',
+      clean: true,
+      connectTimeout: 4000,
+      reconnectPeriod: 4000
+    },
+    subscription: {
+      topic: 'arduino/sensor/HC-SR04',
+      qos: 0
+    },
+    client: {
+      connected: false
+    },
+    subscribeSuccess: false,
+    mqttData: []
   },
   getters: {
     savedValues: state => {
@@ -26,6 +45,9 @@ export default createStore({
     },
     setValues (state, value) {
       state.values = value
+    },
+    setDatas (state, val) {
+      state.datas = val
     }
   },
   actions: {
@@ -63,8 +85,8 @@ export default createStore({
     async postValue () {
       await axios
         .post('http://localhost:5000/api/data/save', {
-          timestamp: '666.6.666',
-          value: 666
+          timestamp: this.state.datas[0],
+          value: this.state.datas[1]
         })
         .then((response) => {
           console.log(response.data)
@@ -73,6 +95,44 @@ export default createStore({
           alert(error, 'Virhe')
           console.log(error)
         })
+    },
+    createConnection ({ commit, dispatch }) {
+      const { host, port, endpoint, ...options } = this.state.connection
+      const connectUrl = `ws://${host}:${port}${endpoint}`
+      try {
+        this.state.client = mqtt.connect(connectUrl, options)
+      } catch (error) {
+        console.log('mqtt.connect error', error)
+      }
+      this.state.client.on('connect', () => {
+        console.log('Connection succeeded!')
+        // this.store.actions.doSubscribe()
+        dispatch('doSubscribe')
+      })
+      this.state.client.on('error', error => {
+        console.log('Connection failed', error)
+      })
+      this.state.client.on('message', (topic, message) => {
+        const val = JSON.stringify(String.fromCharCode.apply(null, new Uint8Array(message)))
+        const test = val.slice(1, -1)
+        const t1 = test.split(',')
+        commit('setDatas', t1)
+        if (t1[1] > 20) {
+          dispatch('postValue', t1)
+        }
+        console.log(t1)
+      })
+    },
+    doSubscribe () {
+      const { topic, qos } = this.state.subscription
+      this.state.client.subscribe(topic, { qos }, (error, res) => {
+        if (error) {
+          console.log('Subscribe to topics error', error)
+          return
+        }
+        this.state.subscribeSuccess = true
+        console.log('Subscribe to topics res', res)
+      })
     }
   },
   modules: {}

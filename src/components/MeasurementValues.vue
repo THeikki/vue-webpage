@@ -2,6 +2,10 @@
   <HeaderComponent />
   <div class="container">
     <h1>{{ text }}</h1>
+    <div class="center">
+      <p>{{ datas[0] }}</p>
+      <p>{{ datas[1] }}</p>
+    </div>
   </div>
   <FooterComponent />
 </template>
@@ -14,7 +18,7 @@ export default {
   name: 'MeasurementValues',
   props: {
     text: String,
-    mqttData: Array
+    datas: Array
   },
   components: {
     HeaderComponent,
@@ -25,6 +29,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.center {
+  padding: 10px;
+}
 .container {
   position: fixed;
   top: 100px;
@@ -37,5 +44,8 @@ h1 {
 }
 a {
   color: #315a48;
+}
+p {
+  text-align: center;
 }
 </style>
