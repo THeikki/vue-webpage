@@ -106,8 +106,9 @@ export default createStore({
       }
       this.state.client.on('connect', () => {
         console.log('Connection succeeded!')
-        // this.store.actions.doSubscribe()
-        dispatch('doSubscribe')
+        if (this.state.subscribeSuccess === false) {
+          dispatch('doSubscribe')
+        }
       })
       this.state.client.on('error', error => {
         console.log('Connection failed', error)
@@ -122,6 +123,19 @@ export default createStore({
         }
         console.log(t1)
       })
+    },
+    destroyConnection () {
+      if (this.state.client.connected) {
+        try {
+          this.state.client.end()
+          this.state.client = {
+            connected: false
+          }
+          console.log('Successfully disconnected!')
+        } catch (error) {
+          console.log('Disconnect failed', error.toString())
+        }
+      }
     },
     doSubscribe () {
       const { topic, qos } = this.state.subscription

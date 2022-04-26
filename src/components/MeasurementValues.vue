@@ -46,6 +46,7 @@ a {
   color: #315a48;
 }
 p {
+  font-size: 25px;
   text-align: center;
 }
 </style>
