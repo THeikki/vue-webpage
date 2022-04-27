@@ -19,7 +19,7 @@ export default {
   },
   data () {
     return {
-      text: 'Welcome to Your Vue.js App'
+      text: 'HC-SR04 sensor values'
     }
   },
   computed: {
