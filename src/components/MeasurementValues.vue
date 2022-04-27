@@ -3,7 +3,7 @@
   <div class="container">
     <h1>{{ text }}</h1>
     <div class="center">
-      <column-chart :data="[[datas[0], datas[1]]]"></column-chart>
+      <column-chart :data="[[datas[0], datas[1]]]" xtitle="Time" ytitle="Distance / cm"></column-chart>
     </div>
   </div>
   <FooterComponent />
