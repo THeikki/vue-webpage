@@ -23,8 +23,7 @@ export default createStore({
     client: {
       connected: false
     },
-    subscribeSuccess: false,
-    mqttData: []
+    subscribeSuccess: false
   },
   getters: {
     savedValues: state => {
@@ -46,8 +45,8 @@ export default createStore({
     setValues (state, value) {
       state.values = value
     },
-    setDatas (state, val) {
-      state.datas = val
+    setDatas (state, value) {
+      state.datas = value
     }
   },
   actions: {
@@ -123,19 +122,6 @@ export default createStore({
         }
         console.log(t1)
       })
-    },
-    destroyConnection () {
-      if (this.state.client.connected) {
-        try {
-          this.state.client.end()
-          this.state.client = {
-            connected: false
-          }
-          console.log('Successfully disconnected!')
-        } catch (error) {
-          console.log('Disconnect failed', error.toString())
-        }
-      }
     },
     doSubscribe () {
       const { topic, qos } = this.state.subscription

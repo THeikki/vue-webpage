@@ -3,8 +3,7 @@
   <div class="container">
     <h1>{{ text }}</h1>
     <div class="center">
-      <p>{{ datas[0] }}</p>
-      <p>{{ datas[1] }}</p>
+      <column-chart :data="[[datas[0], datas[1]]]"></column-chart>
     </div>
   </div>
   <FooterComponent />
