@@ -39,7 +39,6 @@ export default createStore({
   },
   mutations: {
     deleteValue (state, id) {
-      // console.log('poistettu:', id)
       state.values._id = id
     },
     setValues (state, value) {
@@ -66,7 +65,6 @@ export default createStore({
       await axios
         .get('http://localhost:5000/api/data')
         .then((response) => {
-          // console.log(response.data)
           if (response.data.length === 0) {
             this.state.showEmpty = true
             this.state.showValues = false
@@ -113,14 +111,14 @@ export default createStore({
         console.log('Connection failed', error)
       })
       this.state.client.on('message', (topic, message) => {
-        const val = JSON.stringify(String.fromCharCode.apply(null, new Uint8Array(message)))
-        const test = val.slice(1, -1)
-        const t1 = test.split(',')
-        commit('setDatas', t1)
-        if (t1[1] > 20) {
-          dispatch('postValue', t1)
+        const res = JSON.stringify(String.fromCharCode.apply(null, new Uint8Array(message)))
+        const parts = res.slice(1, -1)
+        const data = parts.split(',')
+        commit('setDatas', data)
+        if (data[1] > 20) {
+          dispatch('postValue', data)
         }
-        console.log(t1)
+        console.log(data)
       })
     },
     doSubscribe () {
